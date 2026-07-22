@@ -1,0 +1,6 @@
+{
+  "name": "@mehndiverse/config",
+  "version": "0.1.0",
+  "private": true,
+  "main": "eslint/base.mjs"
+}

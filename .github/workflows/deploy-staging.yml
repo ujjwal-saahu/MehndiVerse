@@ -1,0 +1,124 @@
+name: Deploy — Staging
+
+# Runs after CI succeeds on main — never deploys a commit CI hasn't passed
+# for (see docs/deployment.md#prevent-deployment-if-tests-fail). Also
+# available on manual dispatch for re-deploying an already-green commit
+# without a new push (e.g. after fixing staging-only infra).
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAMESPACE: ${{ github.repository }}
+
+jobs:
+  gate:
+    name: Verify CI passed
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - run: echo "CI passed (or manual dispatch) — proceeding to build/deploy."
+
+  build-and-push-images:
+    name: Build and push images (api, web, admin)
+    needs: gate
+    runs-on: ubuntu-latest
+    environment: staging
+    strategy:
+      matrix:
+        include:
+          - app: api
+            dockerfile: apps/api/Dockerfile
+            context: apps/api
+          - app: web
+            dockerfile: apps/web/Dockerfile
+            context: .
+          - app: admin
+            dockerfile: apps/admin/Dockerfile
+            context: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ matrix.app }}:staging
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ matrix.app }}:staging-${{ github.sha }}
+
+  migrate:
+    name: Run database migrations (staging)
+    needs: build-and-push-images
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[dev]"
+        working-directory: apps/api
+      # DATABASE_URL comes from the "staging" GitHub Environment's secrets
+      # (Settings -> Environments -> staging) — never printed; GitHub
+      # Actions automatically redacts any log line containing a
+      # registered secret value. See docs/deployment.md#secrets-management.
+      - name: alembic upgrade head
+        working-directory: apps/api
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+        run: python -m alembic upgrade head
+
+  deploy:
+    name: Deploy images (api, web, admin)
+    needs: migrate
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Deploy
+        run: |
+          echo "Pull and roll out ${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/{api,web,admin}:staging-${{ github.sha }}"
+          echo "No hosting platform has been chosen for this project yet (see docs/deployment.md) —"
+          echo "this step is a placeholder until one is. Every step before this one (build, push,"
+          echo "migrate) is real and already runs against the staging environment's real secrets."
+
+  smoke-test:
+    name: Staging smoke test
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Health check
+        env:
+          STAGING_API_URL: ${{ secrets.STAGING_API_URL }}
+        run: |
+          curl -sf "$STAGING_API_URL/health" | tee /dev/stderr | grep -q '"status"' || {
+            echo "Staging health check failed — see docs/rollback.md#staging-rollback" >&2
+            exit 1
+          }
+
+  background-workers:
+    name: Restart background workers
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Restart worker processes
+        run: |
+          echo "Restart the process_ai_jobs / process_subscriptions / reconcile_payments /"
+          echo "process_account_deletions scheduled tasks so they pick up the new image."
+          echo "See .github/workflows/scheduled-jobs.yml for how these actually run, and"
+          echo "docs/deployment.md#background-workers for the full picture."

@@ -1,0 +1,178 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least-privilege default — individual jobs don't need to write anything.
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (FastAPI)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: mehndiverse
+          POSTGRES_PASSWORD: mehndiverse
+          POSTGRES_DB: mehndiverse
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mehndiverse"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://mehndiverse:mehndiverse@localhost:5432/mehndiverse
+      REDIS_URL: redis://localhost:6379/1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m mypy app migrations
+      - run: python -m pytest
+
+  web:
+    name: Web (Next.js customer app)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint --workspace=apps/web
+      - run: npm run typecheck --workspace=apps/web
+      - run: npm run test --workspace=apps/web
+      - run: npm run build --workspace=apps/web
+
+  admin:
+    name: Admin (Next.js admin dashboard)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint --workspace=apps/admin
+      - run: npm run typecheck --workspace=apps/admin
+      - run: npm run test --workspace=apps/admin
+      - run: npm run build --workspace=apps/admin
+
+  mobile:
+    name: Mobile (Flutter)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter analyze
+      - run: flutter test
+
+  migrations:
+    name: Migration validation (full chain up/down/up)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: mehndiverse
+          POSTGRES_PASSWORD: mehndiverse
+          POSTGRES_DB: mehndiverse
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mehndiverse"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://mehndiverse:mehndiverse@localhost:5432/mehndiverse
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[dev]"
+      # Every migration's downgrade() must actually work, not just exist —
+      # this is a CI-only round-trip against a throwaway database (never
+      # run `downgrade base` against staging/production; see
+      # docs/rollback.md#database-migration-rollback-limitations for why
+      # this full-chain check doesn't imply every migration is safely
+      # reversible against real data).
+      - run: python -m alembic upgrade head
+      - run: python -m alembic downgrade base
+      - run: python -m alembic upgrade head
+      - run: python -m alembic current
+
+  docker-compose:
+    name: Docker Compose config validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config
+
+  secret-scan:
+    name: Secret scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependency-scan:
+    name: Dependency vulnerability scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: pip-audit (apps/api)
+        working-directory: apps/api
+        run: |
+          python -m pip install -e ".[dev]" pip-audit
+          python -m pip_audit --skip-editable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+      - run: npm ci
+      - name: npm audit (all JS workspaces)
+        run: npm audit --audit-level=high

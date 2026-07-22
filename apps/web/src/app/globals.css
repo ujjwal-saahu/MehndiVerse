@@ -1,0 +1,43 @@
+@import "tailwindcss";
+@import "@mehndiverse/design-tokens/src/tokens.css";
+
+@theme {
+  /* Bind Tailwind's font utilities to the fonts next/font actually loaded
+     (see layout.tsx), falling back to the token defaults from tokens.css. */
+  --font-display: var(--font-display-family), "Fraunces", Georgia, serif;
+  --font-body: var(--font-body-family), "Manrope", "Inter", system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+/* Respect the OS-level "reduce motion" accessibility setting — see
+   docs/localization-and-accessibility.md#reduced-motion-support. Scoped to
+   apps/web's own globals.css (not the shared tokens.css) so it doesn't
+   reach into apps/admin. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* RTL safety net for Urdu/Arabic: a handful of older utility classes in
+   this app use physical `left`/`right` instead of Tailwind's logical
+   `ms-`/`me-`/`ps-`/`pe-` utilities, which don't flip automatically under
+   `dir="rtl"`. New code should prefer the logical utilities; this covers
+   the built-in browser affordances that always need a flip regardless. */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] input[type="checkbox"],
+[dir="rtl"] input[type="radio"] {
+  margin-inline-end: 0.5rem;
+  margin-inline-start: 0;
+}

@@ -1,0 +1,16 @@
+# See docs/deployment.md#required-protected-production-branches. Paired
+# with the "main" branch protection rule (Settings -> Branches -> main):
+# "Require a pull request before merging" + "Require review from Code
+# Owners" together mean nothing reaches main, and therefore nothing is
+# deployable, without a reviewed PR — no direct pushes, no self-merges.
+#
+# One placeholder owner below; replace with real usernames/teams once
+# they're decided (this file has no effect until the branch-protection
+# rule that references it is turned on).
+* @mehndiverse/maintainers
+
+# Deployment/CI changes are high-blast-radius (they control what reaches
+# staging/production and how) — worth a narrower, more deliberate review
+# path than the general codebase.
+/.github/workflows/ @mehndiverse/maintainers
+/apps/api/migrations/ @mehndiverse/maintainers

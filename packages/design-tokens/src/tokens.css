@@ -1,0 +1,136 @@
+/**
+ * Shared design tokens for Tailwind CSS v4's CSS-first `@theme`. Imported by
+ * both apps/web and apps/admin's globals.css so the two apps can never drift.
+ *
+ * Values here must stay in sync with the TypeScript tokens in this package
+ * (colors.ts, typography.ts, ...) and with apps/mobile/lib/core/theme/
+ * (Flutter mirrors the same values manually — see that directory's README).
+ */
+
+@theme {
+  /* --- Typography --- */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", "Inter", system-ui, sans-serif;
+
+  /* --- Radius --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* --- Shadows (warm-tinted, not pure black) --- */
+  --shadow-xs: 0 1px 2px rgba(43, 33, 29, 0.06);
+  --shadow-sm: 0 2px 4px rgba(43, 33, 29, 0.08);
+  --shadow-md: 0 4px 10px rgba(43, 33, 29, 0.1);
+  --shadow-lg: 0 10px 24px rgba(43, 33, 29, 0.12);
+  --shadow-xl: 0 20px 40px rgba(43, 33, 29, 0.16);
+
+  /* --- Breakpoints --- */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* --- Motion --- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1.1);
+
+  /* --- Primitive palette (for the rare case a component needs a specific
+     step rather than a semantic token) --- */
+  --color-henna-100: #f6dfe1;
+  --color-henna-300: #da8d97;
+  --color-henna-600: #7a2e3a;
+  --color-henna-800: #481b22;
+  --color-marigold-100: #faebc9;
+  --color-marigold-300: #ebbb5c;
+  --color-marigold-500: #c98a2c;
+  --color-marigold-700: #82551a;
+  --color-sand-50: #fbf7f2;
+  --color-sand-100: #f5eee6;
+  --color-sand-200: #e8dcd0;
+  --color-sand-300: #d6c4b3;
+  --color-sand-600: #6b5847;
+  --color-sand-800: #392f27;
+  --color-sand-900: #2b211d;
+  --color-sand-950: #1c1512;
+
+  /* --- Semantic colors: light mode defaults --- */
+  --color-background: var(--color-sand-50);
+  --color-surface: #ffffff;
+  --color-surface-variant: var(--color-sand-100);
+  --color-border: var(--color-sand-200);
+  --color-text-primary: var(--color-sand-900);
+  --color-text-secondary: var(--color-sand-600);
+  --color-text-on-primary: var(--color-sand-50);
+  --color-text-on-accent: var(--color-sand-950);
+  --color-primary: var(--color-henna-600);
+  --color-primary-hover: #5f232c;
+  --color-primary-pressed: #481b22;
+  --color-accent: var(--color-marigold-500);
+  --color-accent-hover: #a66e20;
+  --color-success: #2f6f5e;
+  --color-success-surface: #e1f0ea;
+  --color-warning: var(--color-marigold-500);
+  --color-warning-surface: var(--color-marigold-100);
+  --color-danger: #b3432b;
+  --color-danger-surface: #fbe2dc;
+  --color-info: #3b6e8f;
+  --color-info-surface: #e3eef3;
+  --color-focus-ring: #3b6e8f;
+}
+
+/* --- Dark mode: system preference by default, explicit override wins --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: var(--color-sand-950);
+    --color-surface: #241c18;
+    --color-surface-variant: var(--color-sand-900);
+    --color-border: var(--color-sand-800);
+    --color-text-primary: var(--color-sand-50);
+    --color-text-secondary: var(--color-sand-300);
+    --color-text-on-primary: var(--color-sand-950);
+    --color-text-on-accent: var(--color-sand-950);
+    --color-primary: var(--color-henna-300);
+    --color-primary-hover: #eabac0;
+    --color-primary-pressed: #f6dfe1;
+    --color-accent: var(--color-marigold-300);
+    --color-accent-hover: #f3d48d;
+    --color-success: #e1f0ea;
+    --color-success-surface: #1e4a3f;
+    --color-warning: var(--color-marigold-300);
+    --color-warning-surface: #82551a;
+    --color-danger: #fbe2dc;
+    --color-danger-surface: #7a2d1d;
+    --color-info: #e3eef3;
+    --color-info-surface: #284a5f;
+    --color-focus-ring: #e3eef3;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-background: var(--color-sand-950);
+  --color-surface: #241c18;
+  --color-surface-variant: var(--color-sand-900);
+  --color-border: var(--color-sand-800);
+  --color-text-primary: var(--color-sand-50);
+  --color-text-secondary: var(--color-sand-300);
+  --color-text-on-primary: var(--color-sand-950);
+  --color-text-on-accent: var(--color-sand-950);
+  --color-primary: var(--color-henna-300);
+  --color-primary-hover: #eabac0;
+  --color-primary-pressed: #f6dfe1;
+  --color-accent: var(--color-marigold-300);
+  --color-accent-hover: #f3d48d;
+  --color-success: #e1f0ea;
+  --color-success-surface: #1e4a3f;
+  --color-warning: var(--color-marigold-300);
+  --color-warning-surface: #82551a;
+  --color-danger: #fbe2dc;
+  --color-danger-surface: #7a2d1d;
+  --color-info: #e3eef3;
+  --color-info-surface: #284a5f;
+  --color-focus-ring: #e3eef3;
+}

@@ -1,0 +1,103 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "saving": "Saving…"
+  },
+  "nav": {
+    "discover": "Discover",
+    "findArtist": "Find an artist",
+    "search": "Search",
+    "pricing": "Pricing",
+    "saved": "Saved",
+    "collections": "Collections",
+    "previewStudio": "Preview studio",
+    "account": "Account",
+    "login": "Log in",
+    "signup": "Sign up"
+  },
+  "footer": {
+    "rights": "© {{year}} MehndiVerse. All rights reserved.",
+    "login": "Log in",
+    "signup": "Sign up",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "submitting": "Logging in…",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account? Register"
+    },
+    "register": {
+      "title": "Create account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account? Log in",
+      "termsPrefix": "I agree to the",
+      "termsAnd": "and"
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending…"
+    }
+  },
+  "validation": {
+    "invalidEmail": "Enter a valid email address.",
+    "passwordRequired": "Password is required.",
+    "passwordMinLength": "Password must be at least 8 characters.",
+    "displayNameRequired": "Display name is required.",
+    "bioTooLong": "Keep your bio under 1000 characters.",
+    "invalidCountryCode": "Use a 2-letter country code (e.g. IN).",
+    "termsMustBeAccepted": "You must accept the Terms of Service and Privacy Policy to continue."
+  },
+  "settings": {
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "hi": "Hindi (हिन्दी)",
+      "ur": "Urdu (اردو)",
+      "ar": "Arabic (العربية)"
+    },
+    "languageUpdated": "Language updated.",
+    "notifications": "Notifications",
+    "emailNotifications": "Email notifications",
+    "pushNotifications": "Push notifications",
+    "smsNotifications": "SMS notifications",
+    "marketingEmails": "Marketing emails",
+    "analyticsConsent": "Personalization and analytics (see our Cookie Policy)",
+    "privacySettings": "Privacy settings"
+  },
+  "profileEdit": {
+    "displayName": "Display name",
+    "bio": "Bio",
+    "city": "City",
+    "country": "Country (e.g. IN)",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "changePhoto": "Change photo",
+    "uploading": "Uploading…",
+    "avatarInvalidType": "Use a JPEG, PNG, or WEBP image.",
+    "avatarTooLarge": "Image must be smaller than 5 MB.",
+    "genericSaveError": "Could not save your changes.",
+    "genericAvatarError": "Could not upload your image."
+  },
+  "dialog": {
+    "closeLabel": "Close dialog"
+  }
+}

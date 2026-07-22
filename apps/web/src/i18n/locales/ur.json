@@ -1,0 +1,103 @@
+{
+  "common": {
+    "loading": "لوڈ ہو رہا ہے…",
+    "save": "محفوظ کریں",
+    "cancel": "منسوخ کریں",
+    "close": "بند کریں",
+    "saving": "محفوظ ہو رہا ہے…"
+  },
+  "nav": {
+    "discover": "دریافت کریں",
+    "findArtist": "آرٹسٹ تلاش کریں",
+    "search": "تلاش",
+    "pricing": "قیمتیں",
+    "saved": "محفوظ شدہ",
+    "collections": "مجموعے",
+    "previewStudio": "پیش منظر اسٹوڈیو",
+    "account": "اکاؤنٹ",
+    "login": "لاگ ان کریں",
+    "signup": "سائن اپ کریں"
+  },
+  "footer": {
+    "rights": "© {{year}} MehndiVerse۔ جملہ حقوق محفوظ ہیں۔",
+    "login": "لاگ ان کریں",
+    "signup": "سائن اپ کریں",
+    "privacy": "پرائیویسی",
+    "terms": "شرائط",
+    "faq": "اکثر پوچھے گئے سوالات",
+    "contact": "رابطہ کریں"
+  },
+  "languageSwitcher": {
+    "label": "زبان"
+  },
+  "auth": {
+    "login": {
+      "title": "لاگ ان کریں",
+      "email": "ای میل",
+      "password": "پاس ورڈ",
+      "submit": "لاگ ان کریں",
+      "submitting": "لاگ ان ہو رہا ہے…",
+      "forgotPassword": "پاس ورڈ بھول گئے؟",
+      "noAccount": "اکاؤنٹ نہیں ہے؟ رجسٹر کریں"
+    },
+    "register": {
+      "title": "اکاؤنٹ بنائیں",
+      "email": "ای میل",
+      "password": "پاس ورڈ",
+      "submit": "اکاؤنٹ بنائیں",
+      "submitting": "اکاؤنٹ بن رہا ہے…",
+      "haveAccount": "پہلے سے اکاؤنٹ ہے؟ لاگ ان کریں",
+      "termsPrefix": "میں اتفاق کرتا/کرتی ہوں",
+      "termsAnd": "اور"
+    },
+    "forgotPassword": {
+      "title": "پاس ورڈ ری سیٹ کریں",
+      "email": "ای میل",
+      "submit": "ری سیٹ لنک بھیجیں",
+      "submitting": "بھیجا جا رہا ہے…"
+    }
+  },
+  "validation": {
+    "invalidEmail": "ایک درست ای میل پتہ درج کریں۔",
+    "passwordRequired": "پاس ورڈ درکار ہے۔",
+    "passwordMinLength": "پاس ورڈ کم از کم 8 حروف کا ہونا چاہیے۔",
+    "displayNameRequired": "ڈسپلے نام درکار ہے۔",
+    "bioTooLong": "اپنی بایو 1000 حروف سے کم رکھیں۔",
+    "invalidCountryCode": "2 حروف کا ملکی کوڈ استعمال کریں (مثلاً IN)۔",
+    "termsMustBeAccepted": "جاری رکھنے کے لیے آپ کو شرائطِ خدمت اور پرائیویسی پالیسی قبول کرنی ہوں گی۔"
+  },
+  "settings": {
+    "language": "زبان",
+    "languages": {
+      "en": "انگریزی (English)",
+      "hi": "ہندی (हिन्दी)",
+      "ur": "اردو",
+      "ar": "عربی (العربية)"
+    },
+    "languageUpdated": "زبان اپ ڈیٹ ہو گئی۔",
+    "notifications": "اطلاعات",
+    "emailNotifications": "ای میل اطلاعات",
+    "pushNotifications": "پش اطلاعات",
+    "smsNotifications": "ایس ایم ایس اطلاعات",
+    "marketingEmails": "مارکیٹنگ ای میلز",
+    "analyticsConsent": "پرسنلائزیشن اور اینالیٹکس (ہماری کوکی پالیسی دیکھیں)",
+    "privacySettings": "پرائیویسی سیٹنگز"
+  },
+  "profileEdit": {
+    "displayName": "ڈسپلے نام",
+    "bio": "بایو",
+    "city": "شہر",
+    "country": "ملک (مثلاً IN)",
+    "save": "تبدیلیاں محفوظ کریں",
+    "saving": "محفوظ ہو رہا ہے…",
+    "changePhoto": "تصویر تبدیل کریں",
+    "uploading": "اپ لوڈ ہو رہا ہے…",
+    "avatarInvalidType": "JPEG، PNG، یا WEBP تصویر استعمال کریں۔",
+    "avatarTooLarge": "تصویر 5 MB سے چھوٹی ہونی چاہیے۔",
+    "genericSaveError": "آپ کی تبدیلیاں محفوظ نہیں ہو سکیں۔",
+    "genericAvatarError": "آپ کی تصویر اپ لوڈ نہیں ہو سکی۔"
+  },
+  "dialog": {
+    "closeLabel": "ڈائیلاگ بند کریں"
+  }
+}

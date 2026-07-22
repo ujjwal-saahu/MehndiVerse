@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mehndiverse-api"
+version = "0.1.0"
+description = "MehndiVerse backend API"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "email-validator>=2.2",
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "psycopg[binary]>=3.2",
+    "redis>=5.1",
+    "structlog>=24.4",
+    "httpx>=0.27",
+    "pyjwt[crypto]>=2.9",
+    "slowapi>=0.1.9",
+    "pillow>=10.4",
+    "python-multipart>=0.0.9",
+    "tzdata>=2024.2",
+    "prometheus-client>=0.21",
+    "sentry-sdk[fastapi]>=2.17",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.7",
+    "mypy>=1.13",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6.0",
+    "respx>=0.21",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# Alembic's revision template uses its own conventions (Union/Sequence typing,
+# unsorted imports) — generated code we don't hand-tune to match our style.
+extend-exclude = ["migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# B008: FastAPI's dependency injection idiom is `Depends(...)` as an argument
+# default — that's the API, not a bug, so this rule is a false positive here.
+ignore = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+exclude = ["migrations/versions"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

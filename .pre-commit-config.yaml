@@ -1,0 +1,66 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+        files: ^apps/api/
+      - id: ruff-format
+        files: ^apps/api/
+
+  - repo: local
+    hooks:
+      - id: api-mypy
+        name: api mypy
+        entry: >-
+          bash -c 'cd apps/api && (test -f .venv/Scripts/python.exe &&
+          .venv/Scripts/python -m mypy app || .venv/bin/python -m mypy app)'
+        language: system
+        files: ^apps/api/.*\.py$
+        pass_filenames: false
+        require_serial: true
+
+      - id: web-lint
+        name: web eslint
+        entry: npm run lint --workspace=apps/web
+        language: system
+        files: ^apps/web/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+
+      - id: admin-lint
+        name: admin eslint
+        entry: npm run lint --workspace=apps/admin
+        language: system
+        files: ^apps/admin/.*\.(ts|tsx|js|jsx)$
+        pass_filenames: false
+
+      - id: mobile-analyze
+        name: flutter analyze
+        entry: bash -c 'cd apps/mobile && flutter analyze'
+        language: system
+        files: ^apps/mobile/.*\.dart$
+        pass_filenames: false
+
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.3.3
+    hooks:
+      - id: prettier
+        files: ^(apps/(web|admin)|packages)/.*\.(ts|tsx|js|jsx|json|css|md)$
+        exclude: ^(apps/web/\.next/|apps/admin/\.next/|.*/node_modules/)

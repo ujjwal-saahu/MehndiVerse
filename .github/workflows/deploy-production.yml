@@ -1,0 +1,124 @@
+name: Deploy — Production
+
+# Triggered by pushing a version tag (see docs/deployment.md#versioning) —
+# never by a push to main directly, so cutting a release is a deliberate,
+# separate action from merging. `environment: production` below is what
+# activates the manual-approval gate: this repo's "production" GitHub
+# Environment must have "Required reviewers" configured (Settings ->
+# Environments -> production — a one-time repo-settings change this
+# workflow file can't itself express, documented in
+# docs/deployment.md#production-approval-gate). Every job that touches
+# production waits at that gate until an approver signs off.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAMESPACE: ${{ github.repository }}
+
+jobs:
+  resolve-version:
+    name: Resolve release version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+  # Promotes the *already-built-and-staging-tested* image by re-tagging it
+  # — never rebuilds from source for production. Rebuilding here would let
+  # production run bytes that staging never actually verified (a different
+  # base-image layer pulled between builds, a flaky compile, etc.). The
+  # version tag must therefore point at a commit that already went through
+  # deploy-staging.yml.
+  promote-images:
+    name: Promote staging images to production tags
+    needs: resolve-version
+    runs-on: ubuntu-latest
+    environment: production
+    strategy:
+      matrix: { app: [api, web, admin] }
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Re-tag staging-${{ github.sha }} as production release
+        run: |
+          SRC="${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ matrix.app }}:staging-${{ github.sha }}"
+          docker buildx imagetools create \
+            --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ matrix.app }}:v${{ needs.resolve-version.outputs.version }}" \
+            --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ matrix.app }}:production" \
+            "$SRC"
+
+  migrate:
+    name: Run database migrations (production)
+    needs: [resolve-version, promote-images]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e ".[dev]"
+        working-directory: apps/api
+      # See docs/rollback.md#database-migration-rollback-limitations before
+      # ever running this against production manually outside CI — some
+      # migrations cannot be safely downgraded once real data depends on
+      # them, regardless of what CI's full-chain check (.github/workflows
+      # /ci.yml's `migrations` job) verified against a throwaway database.
+      - name: alembic upgrade head
+        working-directory: apps/api
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+        run: python -m alembic upgrade head
+
+  deploy:
+    name: Deploy release ${{ needs.resolve-version.outputs.version }}
+    needs: [resolve-version, migrate]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy
+        run: |
+          echo "Roll out v${{ needs.resolve-version.outputs.version }} (api, web, admin) to production."
+          echo "No hosting platform has been chosen for this project yet — see docs/deployment.md."
+          echo "This step is a placeholder; build/promote/migrate above are real."
+
+  smoke-test:
+    name: Production smoke test
+    needs: deploy
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Health check
+        env:
+          PRODUCTION_API_URL: ${{ secrets.PRODUCTION_API_URL }}
+        run: |
+          curl -sf "$PRODUCTION_API_URL/health" | tee /dev/stderr | grep -q '"status"' || {
+            echo "Production health check failed — see docs/rollback.md#production-rollback-procedure" >&2
+            exit 1
+          }
+
+  create-release:
+    name: Record GitHub release
+    needs: [resolve-version, smoke-test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          name: v${{ needs.resolve-version.outputs.version }}

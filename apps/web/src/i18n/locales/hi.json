@@ -1,0 +1,103 @@
+{
+  "common": {
+    "loading": "लोड हो रहा है…",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "close": "बंद करें",
+    "saving": "सहेजा जा रहा है…"
+  },
+  "nav": {
+    "discover": "खोजें",
+    "findArtist": "कलाकार खोजें",
+    "search": "खोज",
+    "pricing": "मूल्य निर्धारण",
+    "saved": "सहेजे गए",
+    "collections": "संग्रह",
+    "previewStudio": "पूर्वावलोकन स्टूडियो",
+    "account": "खाता",
+    "login": "लॉग इन करें",
+    "signup": "साइन अप करें"
+  },
+  "footer": {
+    "rights": "© {{year}} MehndiVerse. सर्वाधिकार सुरक्षित।",
+    "login": "लॉग इन करें",
+    "signup": "साइन अप करें",
+    "privacy": "गोपनीयता",
+    "terms": "शर्तें",
+    "faq": "सामान्य प्रश्न",
+    "contact": "संपर्क करें"
+  },
+  "languageSwitcher": {
+    "label": "भाषा"
+  },
+  "auth": {
+    "login": {
+      "title": "लॉग इन करें",
+      "email": "ईमेल",
+      "password": "पासवर्ड",
+      "submit": "लॉग इन करें",
+      "submitting": "लॉग इन हो रहा है…",
+      "forgotPassword": "पासवर्ड भूल गए?",
+      "noAccount": "खाता नहीं है? रजिस्टर करें"
+    },
+    "register": {
+      "title": "खाता बनाएं",
+      "email": "ईमेल",
+      "password": "पासवर्ड",
+      "submit": "खाता बनाएं",
+      "submitting": "खाता बनाया जा रहा है…",
+      "haveAccount": "पहले से खाता है? लॉग इन करें",
+      "termsPrefix": "मैं सहमत हूं",
+      "termsAnd": "और"
+    },
+    "forgotPassword": {
+      "title": "पासवर्ड रीसेट करें",
+      "email": "ईमेल",
+      "submit": "रीसेट लिंक भेजें",
+      "submitting": "भेजा जा रहा है…"
+    }
+  },
+  "validation": {
+    "invalidEmail": "एक मान्य ईमेल पता दर्ज करें।",
+    "passwordRequired": "पासवर्ड आवश्यक है।",
+    "passwordMinLength": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए।",
+    "displayNameRequired": "प्रदर्शन नाम आवश्यक है।",
+    "bioTooLong": "अपनी बायो 1000 अक्षरों से कम रखें।",
+    "invalidCountryCode": "2-अक्षर का देश कोड उपयोग करें (जैसे IN)।",
+    "termsMustBeAccepted": "जारी रखने के लिए आपको सेवा की शर्तें और गोपनीयता नीति स्वीकार करनी होंगी।"
+  },
+  "settings": {
+    "language": "भाषा",
+    "languages": {
+      "en": "अंग्रेज़ी (English)",
+      "hi": "हिन्दी",
+      "ur": "उर्दू (اردو)",
+      "ar": "अरबी (العربية)"
+    },
+    "languageUpdated": "भाषा अपडेट हो गई।",
+    "notifications": "सूचनाएं",
+    "emailNotifications": "ईमेल सूचनाएं",
+    "pushNotifications": "पुश सूचनाएं",
+    "smsNotifications": "एसएमएस सूचनाएं",
+    "marketingEmails": "मार्केटिंग ईमेल",
+    "analyticsConsent": "वैयक्तिकरण और एनालिटिक्स (हमारी कुकी नीति देखें)",
+    "privacySettings": "गोपनीयता सेटिंग्स"
+  },
+  "profileEdit": {
+    "displayName": "प्रदर्शन नाम",
+    "bio": "बायो",
+    "city": "शहर",
+    "country": "देश (जैसे IN)",
+    "save": "बदलाव सहेजें",
+    "saving": "सहेजा जा रहा है…",
+    "changePhoto": "फ़ोटो बदलें",
+    "uploading": "अपलोड हो रहा है…",
+    "avatarInvalidType": "JPEG, PNG, या WEBP छवि का उपयोग करें।",
+    "avatarTooLarge": "छवि 5 MB से छोटी होनी चाहिए।",
+    "genericSaveError": "आपके बदलाव सहेजे नहीं जा सके।",
+    "genericAvatarError": "आपकी छवि अपलोड नहीं हो सकी।"
+  },
+  "dialog": {
+    "closeLabel": "संवाद बंद करें"
+  }
+}

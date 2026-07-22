@@ -1,0 +1,103 @@
+{
+  "common": {
+    "loading": "جارٍ التحميل…",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "saving": "جارٍ الحفظ…"
+  },
+  "nav": {
+    "discover": "استكشف",
+    "findArtist": "ابحث عن فنان",
+    "search": "بحث",
+    "pricing": "الأسعار",
+    "saved": "المحفوظات",
+    "collections": "المجموعات",
+    "previewStudio": "استوديو المعاينة",
+    "account": "الحساب",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب"
+  },
+  "footer": {
+    "rights": "© {{year}} MehndiVerse. جميع الحقوق محفوظة.",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "privacy": "الخصوصية",
+    "terms": "الشروط",
+    "faq": "الأسئلة الشائعة",
+    "contact": "اتصل بنا"
+  },
+  "languageSwitcher": {
+    "label": "اللغة"
+  },
+  "auth": {
+    "login": {
+      "title": "تسجيل الدخول",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "submit": "تسجيل الدخول",
+      "submitting": "جارٍ تسجيل الدخول…",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "noAccount": "ليس لديك حساب؟ سجّل الآن"
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "submit": "إنشاء حساب",
+      "submitting": "جارٍ إنشاء الحساب…",
+      "haveAccount": "لديك حساب بالفعل؟ سجّل الدخول",
+      "termsPrefix": "أوافق على",
+      "termsAnd": "و"
+    },
+    "forgotPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "email": "البريد الإلكتروني",
+      "submit": "إرسال رابط إعادة التعيين",
+      "submitting": "جارٍ الإرسال…"
+    }
+  },
+  "validation": {
+    "invalidEmail": "أدخل عنوان بريد إلكتروني صالحًا.",
+    "passwordRequired": "كلمة المرور مطلوبة.",
+    "passwordMinLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+    "displayNameRequired": "الاسم المعروض مطلوب.",
+    "bioTooLong": "اجعل نبذتك أقل من 1000 حرف.",
+    "invalidCountryCode": "استخدم رمز دولة مكونًا من حرفين (مثل IN).",
+    "termsMustBeAccepted": "يجب أن توافق على شروط الخدمة وسياسة الخصوصية للمتابعة."
+  },
+  "settings": {
+    "language": "اللغة",
+    "languages": {
+      "en": "الإنجليزية (English)",
+      "hi": "الهندية (हिन्दी)",
+      "ur": "الأردية (اردو)",
+      "ar": "العربية"
+    },
+    "languageUpdated": "تم تحديث اللغة.",
+    "notifications": "الإشعارات",
+    "emailNotifications": "إشعارات البريد الإلكتروني",
+    "pushNotifications": "الإشعارات الفورية",
+    "smsNotifications": "إشعارات الرسائل النصية",
+    "marketingEmails": "رسائل تسويقية",
+    "analyticsConsent": "التخصيص والتحليلات (راجع سياسة ملفات تعريف الارتباط)",
+    "privacySettings": "إعدادات الخصوصية"
+  },
+  "profileEdit": {
+    "displayName": "الاسم المعروض",
+    "bio": "النبذة",
+    "city": "المدينة",
+    "country": "الدولة (مثل IN)",
+    "save": "حفظ التغييرات",
+    "saving": "جارٍ الحفظ…",
+    "changePhoto": "تغيير الصورة",
+    "uploading": "جارٍ الرفع…",
+    "avatarInvalidType": "استخدم صورة بصيغة JPEG أو PNG أو WEBP.",
+    "avatarTooLarge": "يجب أن يكون حجم الصورة أقل من 5 ميغابايت.",
+    "genericSaveError": "تعذر حفظ التغييرات.",
+    "genericAvatarError": "تعذر رفع الصورة."
+  },
+  "dialog": {
+    "closeLabel": "إغلاق الحوار"
+  }
+}

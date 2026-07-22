@@ -1,0 +1,69 @@
+# --- Secrets ---
+.env
+.env.local
+.env.*.local
+.env.test
+.env.staging
+.env.production
+!.env.example
+!.env.*.example
+
+# --- Local visual-testing tooling (docs/visual-testing-guide.md) ---
+apps/api/scripts/.fake_supabase_users.json
+
+# --- Database backups/dumps — never committed, see
+# docs/security-review.md#backup-access-controls ---
+*.sql.gz
+*.dump
+*.backup
+*.bak
+
+# --- Node / Next.js (apps/web, apps/admin, packages/*) ---
+node_modules/
+.next/
+out/
+.turbo/
+coverage/
+*.tsbuildinfo
+npm-debug.log*
+
+# --- Playwright (/e2e) ---
+test-results/
+playwright-report/
+blob-report/
+
+# --- Python / FastAPI (apps/api) ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# --- Flutter / Dart (apps/mobile) ---
+apps/mobile/.dart_tool/
+apps/mobile/.flutter-plugins
+apps/mobile/.flutter-plugins-dependencies
+apps/mobile/.pub-cache/
+apps/mobile/.pub/
+apps/mobile/build/
+apps/mobile/android/.gradle/
+apps/mobile/android/local.properties
+apps/mobile/ios/Pods/
+apps/mobile/ios/.symlinks/
+apps/mobile/ios/Flutter/Flutter.framework
+apps/mobile/ios/Flutter/Flutter.podspec
+apps/mobile/**/*.g.dart
+apps/mobile/**/*.freezed.dart
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+*.pid
