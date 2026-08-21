@@ -1,6 +1,6 @@
 # MehndiVerse
 
-MehndiVerse is a marketplace and design-discovery platform connecting customers with mehndi artists. See [docs/product-requirements.md](docs/product-requirements.md) for product scope and [docs/system-architecture.md](docs/system-architecture.md) for the target architecture.
+MehndiVerse is a marketplace and design-discovery platform connecting customers with mehndi artists. See [docs/project-flow-diagram.md](docs/project-flow-diagram.md) for a visual overview, [docs/product-requirements.md](docs/product-requirements.md) for product scope, and [docs/system-architecture.md](docs/system-architecture.md) for the target architecture.
 
 This repository is being built incrementally, one phase at a time. See [docs/development-roadmap.md](docs/development-roadmap.md) for the phase plan. **This is Phase 1: monorepo and engineering foundation.** No authentication or product features are implemented yet — every app exposes only a health check.
 
