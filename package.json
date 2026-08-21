@@ -19,7 +19,7 @@
     "test:e2e": "playwright test --config=e2e/playwright.config.ts"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.1",
     "prettier": "^3.3.3"
   }
 }
