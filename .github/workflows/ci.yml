@@ -44,7 +44,7 @@ jobs:
       DATABASE_URL: postgresql+psycopg://mehndiverse:mehndiverse@localhost:5432/mehndiverse
       REDIS_URL: redis://localhost:6379/1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -58,7 +58,7 @@ jobs:
     name: Web (Next.js customer app)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
@@ -73,7 +73,7 @@ jobs:
     name: Admin (Next.js admin dashboard)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
@@ -91,7 +91,7 @@ jobs:
       run:
         working-directory: apps/mobile
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
@@ -123,7 +123,7 @@ jobs:
     env:
       DATABASE_URL: postgresql+psycopg://mehndiverse:mehndiverse@localhost:5432/mehndiverse
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -143,14 +143,14 @@ jobs:
     name: Docker Compose config validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: docker compose config
 
   secret-scan:
     name: Secret scanning
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - uses: gitleaks/gitleaks-action@v2
@@ -161,7 +161,7 @@ jobs:
     name: Dependency vulnerability scanning
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
