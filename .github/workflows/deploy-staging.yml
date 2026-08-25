@@ -5,6 +5,7 @@ name: Deploy — Staging
 # available on manual dispatch for re-deploying an already-green commit
 # without a new push (e.g. after fixing staging-only infra).
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["CI"]
     branches: [main]
