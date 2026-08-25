@@ -8,6 +8,7 @@ name: Scheduled background jobs
 # idempotent (see docs/performance-and-reliability.md#idempotent-tasks),
 # so an overlapping run or a skipped run is never destructive.
 on:
+  workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *" # ai jobs — short-latency, user-facing
     - cron: "0 * * * *" # payment reconciliation — hourly
