@@ -10,6 +10,7 @@ name: Deploy — Production
 # docs/deployment.md#production-approval-gate). Every job that touches
 # production waits at that gate until an approver signs off.
 on:
+  workflow_dispatch:
   push:
     tags: ["v*.*.*"]
 
