@@ -50,7 +50,7 @@ dependencies:
   # Secure on-device token storage (Keychain / Keystore-backed)
   flutter_secure_storage: ^9.2.4
   # Avatar image selection (gallery/camera)
-  image_picker: ^1.1.2
+  image_picker: ^1.2.4
   # MediaType for multipart avatar uploads via Dio
   http_parser: ^4.1.2
 
